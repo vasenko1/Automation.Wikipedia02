@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Automation.Wikipedia01
+namespace Automation.Wikipedia02
 {
     class Assertions
     {

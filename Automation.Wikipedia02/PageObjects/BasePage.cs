@@ -4,10 +4,14 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 
-namespace Automation.Wikipedia01.Pages
+namespace Automation.Wikipedia02.Pages
 {
     public class BasePage
     {
+        [FindsBy(How = How.Id, Using = "searchInput")]
+        private IWebElement _searchFieldID;
+
+
         public IWebDriver Driver { get; set; }
 
         public BasePage(IWebDriver driver)
@@ -32,11 +36,11 @@ namespace Automation.Wikipedia01.Pages
                 .Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
-        public IWebElement FindElementByXpath(string elementXPath)
-        {
-            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
-                .Until(ExpectedConditions.ElementExists(By.XPath(elementXPath)));
-        }
+        //public IWebElement FindElementByXpath(string elementXPath)
+        //{
+        //    return new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
+        //        .Until(ExpectedConditions.ElementExists(By.XPath(elementXPath)));
+        //}
 
         public void SelectDropdownItem(IWebElement element, string menuItemText)
         {
@@ -47,12 +51,12 @@ namespace Automation.Wikipedia01.Pages
             Console.WriteLine("Dropdown Item '" + menuItemText + "' is selected.");
         }
 
-        public void SearchByInputTextIntoSearchField(IWebElement element, string text)
+        public void DoSearchByText(string textForSearch)
         {
-            element.Clear();
-            element.SendKeys(text);
-            element.Submit();
-            Console.WriteLine("Search with text '" + text + "' is done.");
+            _searchFieldID.Clear();
+            _searchFieldID.SendKeys(textForSearch);
+            _searchFieldID.Submit();
+            Console.WriteLine("Search with text '" + textForSearch + "' is done.");
         }
     }
 }

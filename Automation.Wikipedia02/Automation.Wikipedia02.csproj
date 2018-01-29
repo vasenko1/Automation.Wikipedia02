@@ -61,11 +61,12 @@
     <Compile Include="Assertions.cs" />
     <Compile Include="Base\BaseWebDrivers.cs" />
     <Compile Include="Base\MyFactory.cs" />
+    <Compile Include="PageObjects\ArticlePage.cs" />
     <Compile Include="PageObjects\BasePage.cs" />
     <Compile Include="PageObjects\EditPage.cs" />
     <Compile Include="PageObjects\MainPage.cs" />
     <Compile Include="PageObjects\HomePage.cs" />
-    <Compile Include="PageObjects\SearchResultPage.cs" />
+    <Compile Include="PageObjects\SpecialPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Test01.cs" />
   </ItemGroup>

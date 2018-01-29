@@ -3,7 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
-namespace Automation.Wikipedia01.Pages
+namespace Automation.Wikipedia02.Pages
 {
     class EditPage : BasePage
     {

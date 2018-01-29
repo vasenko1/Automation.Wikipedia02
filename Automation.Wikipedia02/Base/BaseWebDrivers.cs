@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace Automation.Wikipedia01.Base
+namespace Automation.Wikipedia02.Base
 {
 
     [TestFixture]
@@ -19,7 +19,7 @@ namespace Automation.Wikipedia01.Base
         [SetUp]
         public void SetUp()
         {
-            driver = MyFactory.GetBrowserInstance();
+            driver = MyFactory.GetBrowserInstance("Chrome");
         }
 
         [TearDown]

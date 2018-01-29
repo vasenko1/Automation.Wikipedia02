@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 
-namespace Automation.Wikipedia01.Pages
+namespace Automation.Wikipedia02.Pages
 {
     class HomePage : BasePage
     {
@@ -34,16 +34,6 @@ namespace Automation.Wikipedia01.Pages
             Check10LangLinkElements();
             CheckHomePageIsCorrect();
             ClickEnglishLink();
-        }
-
-        public void SwitchToHomePageByUrl()
-        {
-            SwitchToPageByUrl("https://en.wikipedia.org", "");
-
-            new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
-                .Until(ExpectedConditions.TitleContains("DAASDAS"));
-
-            Console.WriteLine("Switching to MainPage correctly.");
         }
 
         private void CheckPrePageTitleIsCorrect()
