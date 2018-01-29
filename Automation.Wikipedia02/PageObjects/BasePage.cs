@@ -1,5 +1,4 @@
 ﻿using System;
-using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
@@ -9,36 +8,35 @@ namespace Automation.Wikipedia01.Pages
 {
     public class BasePage
     {
-        public static IWebDriver Driver { get; set; }
+        public IWebDriver Driver { get; set; }
 
         public BasePage(IWebDriver driver)
         {
             Driver = driver;
             PageFactory.InitElements(driver, this);
         }
-        
-        public void OpenPage(string PageURL)
+
+        public void SwitchToPageByUrl(string PageURL, string title)
         {
             Driver.Navigate().GoToUrl(PageURL);
-            string url = Driver.Url.ToString();
-            Assertions.AssertIt(() => Assert.AreEqual(url, PageURL));
-            Console.WriteLine("Opened page url: '" + PageURL + "' is correct.");
+
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(10))
+                .Until(ExpectedConditions.TitleContains(title));
+
+            Console.WriteLine("Switching to page url: '" + PageURL + "' correctly.");
         }
 
-        public void WaitUntilClickable(IWebElement element)
+        public void WaitUntilClickable(IWebElement element, int timeout)
         {
-            new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout))
                 .Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
-        /*
         public IWebElement FindElementByXpath(string elementXPath)
         {
-            IWebElement element = new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
+            return new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
                 .Until(ExpectedConditions.ElementExists(By.XPath(elementXPath)));
-            return element;
         }
-        */
 
         public void SelectDropdownItem(IWebElement element, string menuItemText)
         {

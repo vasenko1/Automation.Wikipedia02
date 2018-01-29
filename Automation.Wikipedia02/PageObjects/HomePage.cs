@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 
 namespace Automation.Wikipedia01.Pages
 {
-    class PrePage : BasePage
+    class HomePage : BasePage
     {
-        private string pageURL = "https://www.wikipedia.org/";
-
         [FindsBy(How = How.Id, Using = "js-link-box-en")]
         private IWebElement _linkEngId;
 
@@ -17,24 +16,34 @@ namespace Automation.Wikipedia01.Pages
         private IWebElement _linkRusId;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='central-featured']/div/a/strong")]
-        private IWebElement _LangLinksTextXPath;
+        private IList<IWebElement> _langLinksTextXPath;
 
         [FindsBy(How = How.XPath, Using = "id('searchLanguage')")]
-        private IWebElement _SearchLangDDXpath;
+        private IWebElement _searchLangDDXpath;
 
-        public PrePage(IWebDriver driver) : base(driver)
+        public HomePage(IWebDriver driver) : base(driver)
         {
         }
 
 
         public void RunTest()
         {
-            OpenPage(pageURL);
-            SelectDropdownItem(_SearchLangDDXpath, "Suomi");
+            SwitchToPageByUrl("https://www.wikipedia.org/", "");
+            SelectDropdownItem(_searchLangDDXpath, "Suomi");
             CheckPrePageTitleIsCorrect();
             Check10LangLinkElements();
-            CheckPrePageIsCorrect();
+            CheckHomePageIsCorrect();
             ClickEnglishLink();
+        }
+
+        public void SwitchToHomePageByUrl()
+        {
+            SwitchToPageByUrl("https://en.wikipedia.org", "");
+
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
+                .Until(ExpectedConditions.TitleContains("DAASDAS"));
+
+            Console.WriteLine("Switching to MainPage correctly.");
         }
 
         private void CheckPrePageTitleIsCorrect()
@@ -48,25 +57,20 @@ namespace Automation.Wikipedia01.Pages
         private void Check10LangLinkElements()
         {
             const int number = 10;
-            int i = 0;
 
-            IList<IWebElement> allElements = Driver.FindElements(By.XPath("//div[@class='central-featured']/div/a/strong"));
-            String[] elementsText = new String[allElements.Count];
-            foreach (IWebElement element in allElements)
-            {
-                elementsText[i++] = element.Text;
+            IList<IWebElement> allElements = _langLinksTextXPath;
+            IList<String> value = new List<String>();
+
+            foreach (IWebElement element in allElements) {
+                value.Add(element.Text);
+                Console.WriteLine("AA" + element.Text + " - OK!");
             }
 
-            for (i = 0; i < elementsText.Length; i++)
-            {
-                Console.WriteLine("     "+ (i + 1) + ") " + elementsText[i] + " - OK!");
-            }
-            Assertions.AssertIt(() => Assert.AreEqual(elementsText.Length, number));
-
+            Assertions.AssertIt(() => Assert.AreEqual(value.Count, number));
             Console.WriteLine(number + " language link elements are presented.");
         }
 
-        private void CheckPrePageIsCorrect()
+        private void CheckHomePageIsCorrect()
         {
             string elementText = _linkRusId.Text;
             Assertions.AssertIt(() => Assert.AreEqual(elementText, "Русский"));

@@ -8,15 +8,18 @@ namespace Automation.Wikipedia01.Tests
     [Parallelizable]
     class Test01 : BaseWebDriver
     {
-        
-        PrePage pp = new PrePage(testBrowser);
-        MainPage mp = new MainPage(testBrowser);
-        SearchResultPage srp = new SearchResultPage(testBrowser);
-        EditPage ep = new EditPage(testBrowser);
+        HomePage pp;
+        MainPage mp;
+        SearchResultPage srp;
+        EditPage ep;
 
         [Test]
-        public void CheckPrePage()
+        public void CheckWikiStartPage()
         {
+            pp = new HomePage(driver);
+            mp = new MainPage(driver);
+            srp = new SearchResultPage(driver);
+            ep = new EditPage(driver);
             pp.RunTest();
         }
 

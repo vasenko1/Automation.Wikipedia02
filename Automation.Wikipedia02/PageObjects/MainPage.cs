@@ -2,13 +2,12 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 
 namespace Automation.Wikipedia01.Pages
 {
     class MainPage : BasePage
     {
-        private string MainPageUrl = "https://en.wikipedia.org/wiki/Main_Page";
-
         [FindsBy(How = How.Id, Using = "searchInput")]
         private IWebElement _searchFieldID;
 
@@ -21,10 +20,20 @@ namespace Automation.Wikipedia01.Pages
 
         public void RunTest()
         {
-            OpenPage(MainPageUrl);
+            SwitchToMainPageByUrl();
             SearchByInputTextIntoSearchField(_searchFieldID, "Dropdown");
             CheckMainPageHeaderIsCorrect("Dropdown");
             Console.WriteLine("MainPage is fully checked.");
+        }
+
+        public void SwitchToMainPageByUrl()
+        {
+            OpenPage("https://en.wikipedia.org/wiki/Main_Page");
+
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
+                .Until(ExpectedConditions.TitleContains("DAASDAS"));
+
+            Console.WriteLine("Switching to MainPage correctly.");
         }
 
         private void CheckMainPageHeaderIsCorrect(string text)

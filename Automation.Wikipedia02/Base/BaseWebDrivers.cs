@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
 
 namespace Automation.Wikipedia01.Base
 {
@@ -11,24 +8,30 @@ namespace Automation.Wikipedia01.Base
     [Parallelizable]
     class BaseWebDriver
     {
-        private static IWebDriver chrome = new ChromeDriver();
-        //public static IWebDriver firefox = new FirefoxDriver();
-        //public static IWebDriver edge = new EdgeDriver();
-        
-
-        public static IWebDriver testBrowser = chrome;
-        
+        protected IWebDriver driver;
 
         [OneTimeSetUp]
-        public void Initialize()
+        public void OneTimeSetUp()
         {
+            //reporter
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            driver = MyFactory.GetBrowserInstance();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
         }
 
         [OneTimeTearDown]
-        public void Exit()
+        public void OneTimeTearDown()
         {
-            testBrowser.Close();
-            testBrowser.Quit();
+            //reporter -> generate report
         }
     }
 }

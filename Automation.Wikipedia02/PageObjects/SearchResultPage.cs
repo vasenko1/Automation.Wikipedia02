@@ -15,15 +15,9 @@ namespace Automation.Wikipedia01.Pages
 
         public void ClickEditTab()
         {
-            try
-            {
-                _editTabId.Click();
-                Console.WriteLine("Edit tab is clicked.");
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
+            WaitUntilClickable(_editTabId, 10);
+            _editTabId.Click();
+            Console.WriteLine("Edit tab is clicked.");
         }
     }
 }

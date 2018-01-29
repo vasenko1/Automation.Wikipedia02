@@ -7,8 +7,6 @@ namespace Automation.Wikipedia01.Pages
 {
     class EditPage : BasePage
     {
-        private string editPageUrl = "https://en.wikipedia.org/w/index.php?title=Dropdown&action=edit&editintro=Template:Disambig_editintro";
-
         [FindsBy(How = How.XPath, Using = "id('editpage-specialchars')/select")]
         private IWebElement _dropDownMenuXpath;
 
@@ -30,7 +28,7 @@ namespace Automation.Wikipedia01.Pages
         private void CheckIsEditPageOpened()
         {
             string elementText = Driver.Url.ToString();
-            Assertions.AssertIt(() => Assert.AreEqual(elementText, editPageUrl));
+            Assertions.AssertIt(() => Assert.AreEqual(elementText, "https://en.wikipedia.org/w/index.php?title=Dropdown&action=edit&editintro=Template:Disambig_editintro"));
             Console.WriteLine("Opened Edit page URL is correct.");
         }
     }
