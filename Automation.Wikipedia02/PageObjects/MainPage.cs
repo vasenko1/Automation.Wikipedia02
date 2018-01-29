@@ -28,7 +28,7 @@ namespace Automation.Wikipedia01.Pages
 
         public void SwitchToMainPageByUrl()
         {
-            OpenPage("https://en.wikipedia.org/wiki/Main_Page");
+            SwitchToPageByUrl("https://en.wikipedia.org/wiki/Main_Page", "");
 
             new WebDriverWait(Driver, TimeSpan.FromSeconds(5))
                 .Until(ExpectedConditions.TitleContains("DAASDAS"));
